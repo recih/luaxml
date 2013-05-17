@@ -386,19 +386,6 @@ int Xml_encode(lua_State *L) {
 		luaL_gsub(L, lua_tostring(L,-1), sv_code[i], sv_code[i+1]);
 		lua_remove(L,-2);
 	}
-	char buf[8];
-	const char* s=lua_tostring(L,1);
-	size_t start, pos;
-	luaL_Buffer b;
-	luaL_buffinit(L, &b);
-	for(start=pos=0; s[pos]!=0; ++pos) if(s[pos]<0) {
-		if(pos>start) luaL_addlstring(&b,s+start, pos-start);
-		luaL_addstring(&b,char2code((unsigned char)(s[pos]),buf));
-		start=pos+1;
-	}
-	if(pos>start) luaL_addlstring(&b,s+start, pos-start);
-	luaL_pushresult(&b);
-	lua_remove(L,-2);
     return 1;
 }
 
